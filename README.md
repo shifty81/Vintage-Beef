@@ -10,27 +10,33 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **12 Professions**: Each profession specializes in different aspects of gameplay
 - **Palia-style graphics**: Stylized visuals optimized for lower-end hardware
 
-## Current Features (v0.2.0)
+## Current Features (v0.3.0 - In Development)
 
 ### Implemented
 - ✅ Main Menu system
 - ✅ Lobby with profession selection
 - ✅ 12 unique professions (Farmer, Blacksmith, Builder, Miner, Hunter, Cook, Tailor, Merchant, Explorer, Engineer, Alchemist, Woodworker)
 - ✅ Player movement and camera controls
-- ✅ Basic world generation
+- ✅ **Procedural world generation with biomes**
+- ✅ **Multiple biomes (Forest, Plains, Desert, Mountains)**
+- ✅ **Resource nodes (Trees, Rocks, Plants)**
+- ✅ **Gathering mechanics with respawn**
+- ✅ **Inventory system with stacking**
+- ✅ **Inventory UI**
 - ✅ Dungeon entrance system
-- ✅ **Multiplayer networking (Unity Netcode for GameObjects)**
-- ✅ **Host/Join lobby system**
-- ✅ **Player name synchronization**
-- ✅ **Support for up to 12 players**
+- ✅ Multiplayer networking (Unity Netcode for GameObjects)
+- ✅ Host/Join lobby system
+- ✅ Player name synchronization
+- ✅ Support for up to 12 players
+- ✅ Chat system
 
 ### In Development
-- 🔄 Network player prefabs and scene setup
-- 🔄 Chat system
+- 🔄 Day/night cycle
+- 🔄 Weather system
 - 🔄 Profession-specific abilities and mechanics
 - 🔄 Dungeon instances and content
-- 🔄 Crafting and resource gathering
-- 🔄 Advanced world generation
+- 🔄 Crafting system
+- 🔄 Advanced inventory management
 
 ## Requirements
 
@@ -75,7 +81,9 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **Look**: Mouse
 - **Jump**: Space
 - **Sprint**: Left Shift
-- **Interact with Dungeon**: E (when near entrance)
+- **Interact/Gather**: E (when near resource or dungeon)
+- **Open Inventory**: I
+- **Open Chat**: Enter
 - **Toggle Cursor**: ESC
 
 ## Multiplayer (New in v0.2.0!)
