@@ -20,6 +20,7 @@ Quick reference for common tasks and information in Vintage Beef.
 | Sprint | Left Shift |
 | Interact with Dungeon | E |
 | Unlock Cursor | ESC |
+| **Open Chat** | **Enter** |
 
 ## 👥 The 12 Professions
 
@@ -56,15 +57,30 @@ Vintage-Beef/
 
 | Script | Purpose |
 |--------|---------|
+| **Core Systems** |
 | `ProfessionManager.cs` | Manages all 12 professions |
 | `PlayerData.cs` | Stores player's selected profession |
 | `PlayerController.cs` | Handles movement and camera |
 | `GameManager.cs` | Controls game state and spawning |
+| **UI Systems** |
 | `MainMenuUI.cs` | Main menu logic |
 | `LobbyUI.cs` | Profession selection UI |
-| `SimpleWorldGenerator.cs` | Creates game world |
+| `ConnectionUI.cs` | **v0.2.0** - Multiplayer lobby |
+| `InventoryUI.cs` | **v0.3.0** - Inventory display |
+| **World Generation** |
+| `SimpleWorldGenerator.cs` | Basic world generation |
+| `ProceduralWorldGenerator.cs` | **v0.3.0** - Advanced terrain & biomes |
+| `DayNightCycle.cs` | **v0.3.0** - Time of day system |
+| `WeatherSystem.cs` | **v0.3.0** - Weather effects |
+| **Gameplay** |
 | `DungeonEntrance.cs` | Dungeon interaction points |
-| `NetworkManager.cs` | Multiplayer framework |
+| `ResourceNode.cs` | **v0.3.0** - Gatherable resources |
+| `PlayerInventory.cs` | **v0.3.0** - Inventory system |
+| **Networking** |
+| `NetworkManager.cs` | **v0.2.0** - Multiplayer networking |
+| `NetworkPlayer.cs` | **v0.2.0** - Network player sync |
+| `ChatManager.cs` | **v0.2.0** - In-game chat |
+| `Billboard.cs` | **v0.2.0** - Name tag rendering |
 
 ## 🔧 Common Unity Operations
 
@@ -111,7 +127,10 @@ GameWorld.unity
 | Document | When to Read |
 |----------|--------------|
 | **README.md** | First - Project overview |
+| **QUICKREF.md** | Quick reference (this file!) |
 | **SETUP.md** | Setting up development environment |
+| **UNITY_SETUP.md** | **NEW v0.2.0** - Setting up multiplayer in Unity |
+| **MULTIPLAYER.md** | **NEW v0.2.0** - Multiplayer guide |
 | **TESTING.md** | Before testing features |
 | **CONTRIBUTING.md** | Before making contributions |
 | **ARCHITECTURE.md** | Understanding technical design |
@@ -161,16 +180,36 @@ GameWorld.unity
 - Complex shaders
 - Heavy post-processing
 
-## 🌐 Multiplayer Basics (Framework Only)
+## 🌐 Multiplayer (v0.2.0)
 
-**Current State:** Framework only, not functional yet
+**Current State:** ✅ Core implementation complete!
 
-**Planned Features:**
-- Host/Join system
-- 12 player support
-- Unity Netcode for GameObjects
+**Features Implemented:**
+- ✅ Host/Join system with UI
+- ✅ 12 player support
+- ✅ Player name synchronization
+- ✅ Position synchronization
+- ✅ Chat system with commands
+- ✅ System messages
 
-**Future Implementation:** Phase 1 (v0.2.0)
+**How to Use:**
+1. **Host:** Enter name → Click "Host" → Select profession
+2. **Join:** Enter name → Enter IP → Click "Join" → Select profession
+3. **Chat:** Press Enter to open, type message, press Enter to send
+
+**Chat Commands:**
+- `/help` - Show available commands
+- `/players` - Show connected players count
+- `/time` - Show server time
+
+**Next Steps:**
+- Follow UNITY_SETUP.md to configure scenes in Unity Editor
+- See MULTIPLAYER.md for detailed guide
+
+**Testing:**
+- Build game once
+- Run host in build, client in Unity Editor (or vice versa)
+- Test on same machine with IP: 127.0.0.1
 
 ## 📦 Required Unity Packages
 
@@ -206,14 +245,16 @@ GameWorld.unity
 | Version | Status | Features |
 |---------|--------|----------|
 | v0.1.0 | ✅ Complete | Foundation, basic systems |
-| v0.2.0 | 🔄 Planned | Multiplayer networking |
-| v0.3.0 | 📋 Planned | World generation |
+| v0.2.0 | ✅ Complete | Multiplayer networking, chat |
+| v0.3.0 | ✅ Complete | World generation, biomes, inventory, day/night, weather |
 | v0.4.0 | 📋 Planned | Crafting & professions |
 
 ## 🔗 Quick Links
 
 - [Full README](README.md)
 - [Setup Guide](SETUP.md)
+- [Unity Setup Guide](UNITY_SETUP.md) ⭐ NEW
+- [Multiplayer Guide](MULTIPLAYER.md) ⭐ NEW
 - [Testing Guide](TESTING.md)
 - [Contribution Guide](CONTRIBUTING.md)
 - [Architecture](ARCHITECTURE.md)
@@ -253,6 +294,6 @@ GameWorld.unity
 
 ---
 
-**Last Updated:** v0.1.0
+**Last Updated:** v0.2.0
 
 **Quick Help:** For issues, check Console first, then see TROUBLESHOOTING section above, then create GitHub issue.

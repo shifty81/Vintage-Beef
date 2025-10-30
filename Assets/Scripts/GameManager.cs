@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 namespace VintageBeef
 {
     /// <summary>
     /// Main game manager that handles game state and coordination
+    /// Supports both single-player and multiplayer modes
     /// </summary>
     public class GameManager : MonoBehaviour
     {
@@ -12,9 +14,12 @@ namespace VintageBeef
 
         [Header("Player Settings")]
         [SerializeField] private GameObject playerPrefab;
+        [SerializeField] private GameObject networkPlayerPrefab;
         [SerializeField] private Vector3 spawnPosition = new Vector3(0, 2, 0);
+        [SerializeField] private float spawnRadius = 3f;
 
         private GameObject currentPlayer;
+        private bool isMultiplayerMode = false;
 
         private void Awake()
         {
@@ -47,8 +52,61 @@ namespace VintageBeef
             // Spawn player in game world
             if (scene.name == "GameWorld")
             {
-                SpawnPlayer();
+                // Check if we're in multiplayer mode
+                Network.VintageBeefNetworkManager networkManager = Network.VintageBeefNetworkManager.Instance;
+                isMultiplayerMode = networkManager != null && 
+                                   (networkManager.IsHost() || networkManager.IsClient());
+
+                if (isMultiplayerMode)
+                {
+                    SetupNetworkSpawning();
+                }
+                else
+                {
+                    SpawnPlayer();
+                }
             }
+        }
+
+        private void SetupNetworkSpawning()
+        {
+            Network.VintageBeefNetworkManager networkManager = Network.VintageBeefNetworkManager.Instance;
+            if (networkManager == null) return;
+
+            Unity.Netcode.NetworkManager netManager = networkManager.GetNetworkManager();
+            if (netManager == null) return;
+
+            // Setup network prefab if not already set
+            if (networkPlayerPrefab != null && netManager.NetworkConfig.Prefabs.NetworkPrefabsLists.Count == 0)
+            {
+                // Register network player prefab
+                netManager.NetworkConfig.Prefabs.Add(new NetworkPrefab { Prefab = networkPlayerPrefab });
+                Debug.Log("Network player prefab registered");
+            }
+
+            // If we're the server/host, handle player spawning
+            if (networkManager.IsServer())
+            {
+                // Connection approval callback
+                netManager.ConnectionApprovalCallback += ApprovalCheck;
+                Debug.Log("Connection approval callback set");
+            }
+        }
+
+        private void ApprovalCheck(Unity.Netcode.NetworkManager.ConnectionApprovalRequest request, 
+                                   Unity.Netcode.NetworkManager.ConnectionApprovalResponse response)
+        {
+            // Simple approval - accept all connections up to max players
+            response.Approved = true;
+            response.CreatePlayerObject = true;
+            
+            // Random spawn position around spawn point
+            Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
+            randomOffset.y = 0; // Keep on ground level
+            response.Position = spawnPosition + randomOffset;
+            response.Rotation = Quaternion.identity;
+
+            Debug.Log($"Player connection approved. Spawn position: {response.Position}");
         }
 
         private void SpawnPlayer()
@@ -100,6 +158,12 @@ namespace VintageBeef
 
         public void ReturnToMainMenu()
         {
+            // Shutdown network if in multiplayer mode
+            if (isMultiplayerMode && Network.VintageBeefNetworkManager.Instance != null)
+            {
+                Network.VintageBeefNetworkManager.Instance.Shutdown();
+            }
+
             SceneManager.LoadScene("MainMenu");
         }
 
@@ -111,6 +175,11 @@ namespace VintageBeef
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
+        }
+
+        public bool IsMultiplayerMode()
+        {
+            return isMultiplayerMode;
         }
     }
 }

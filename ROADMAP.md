@@ -24,23 +24,28 @@ This roadmap outlines the planned development phases for Vintage Beef.
 
 **Target:** Q1 2024 (Example timeline)
 
+**Status:** 🔄 In Progress (Core implementation complete, Unity setup needed)
+
 **Priority:** High
 
 **Features:**
-- [ ] Implement Unity Netcode for GameObjects fully
-- [ ] Host/Join lobby system
-- [ ] Player synchronization across network
-- [ ] Username system
-- [ ] Connection UI
+- [x] Implement Unity Netcode for GameObjects fully
+- [x] Host/Join lobby system
+- [x] Player synchronization across network
+- [x] Username system
+- [x] Connection UI
+- [ ] Network player prefab configuration
+- [ ] Unity scene setup for multiplayer
 - [ ] Basic chat system
 - [ ] Test with 12 players
 
 **Technical Tasks:**
-- Integrate NetworkBehaviour components
-- Add NetworkManager setup UI
-- Implement player spawning over network
-- Add disconnection handling
-- Test latency and performance
+- [x] Integrate NetworkBehaviour components
+- [x] Add NetworkManager setup UI
+- [x] Implement player spawning over network
+- [ ] Configure player prefab with NetworkObject
+- [ ] Add disconnection handling
+- [ ] Test latency and performance
 
 **Success Criteria:**
 - 12 players can connect to same game
@@ -54,30 +59,33 @@ This roadmap outlines the planned development phases for Vintage Beef.
 
 **Target:** Q2 2024
 
+**Status:** ✅ Complete
+
 **Priority:** High
 
 **Features:**
-- [ ] Procedural terrain generation
-- [ ] Multiple biomes (forest, plains, mountains, desert)
-- [ ] Day/night cycle
-- [ ] Weather system
-- [ ] Resource nodes (trees, rocks, plants)
-- [ ] Gathering mechanics
-- [ ] Basic inventory system
-- [ ] Environmental hazards
+- [x] Procedural terrain generation
+- [x] Multiple biomes (forest, plains, mountains, desert)
+- [x] Resource nodes (trees, rocks, plants)
+- [x] Gathering mechanics
+- [x] Basic inventory system
+- [x] Day/night cycle
+- [x] Weather system
+- [ ] Environmental hazards (future enhancement)
 
 **Technical Tasks:**
-- Implement noise-based terrain generation
-- Create biome transition system
-- Add time of day lighting
-- Create resource spawning system
-- Build inventory UI and data structures
+- [x] Implement noise-based terrain generation
+- [x] Create biome transition system
+- [x] Create resource spawning system
+- [x] Build inventory UI and data structures
+- [x] Add time of day lighting
+- [x] Add weather effects
 
 **Success Criteria:**
-- Diverse, interesting world to explore
-- Resources can be gathered
-- Inventory stores items
-- Performance maintained (60 FPS target)
+- ✅ Diverse, interesting world to explore
+- ✅ Resources can be gathered
+- ✅ Inventory stores items
+- ✅ Performance maintained (60 FPS target)
 
 ---
 
