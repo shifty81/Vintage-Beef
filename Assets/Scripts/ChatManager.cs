@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.Netcode;
 using System.Collections.Generic;
+using VintageBeef;
 
 namespace VintageBeef.Network
 {

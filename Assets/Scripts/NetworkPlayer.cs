@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using VintageBeef;
 
 namespace VintageBeef.Network
 {
