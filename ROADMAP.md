@@ -59,7 +59,7 @@ This roadmap outlines the planned development phases for Vintage Beef.
 
 **Target:** Q2 2024
 
-**Status:** 🔄 In Progress (Core implementation complete)
+**Status:** ✅ Complete
 
 **Priority:** High
 
@@ -69,23 +69,23 @@ This roadmap outlines the planned development phases for Vintage Beef.
 - [x] Resource nodes (trees, rocks, plants)
 - [x] Gathering mechanics
 - [x] Basic inventory system
-- [ ] Day/night cycle
-- [ ] Weather system
-- [ ] Environmental hazards
+- [x] Day/night cycle
+- [x] Weather system
+- [ ] Environmental hazards (future enhancement)
 
 **Technical Tasks:**
 - [x] Implement noise-based terrain generation
 - [x] Create biome transition system
 - [x] Create resource spawning system
 - [x] Build inventory UI and data structures
-- [ ] Add time of day lighting
-- [ ] Add weather effects
+- [x] Add time of day lighting
+- [x] Add weather effects
 
 **Success Criteria:**
-- Diverse, interesting world to explore
-- Resources can be gathered
-- Inventory stores items
-- Performance maintained (60 FPS target)
+- ✅ Diverse, interesting world to explore
+- ✅ Resources can be gathered
+- ✅ Inventory stores items
+- ✅ Performance maintained (60 FPS target)
 
 ---
 

@@ -23,6 +23,8 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - ✅ **Gathering mechanics with respawn**
 - ✅ **Inventory system with stacking**
 - ✅ **Inventory UI**
+- ✅ **Day/night cycle with dynamic lighting**
+- ✅ **Weather system (Clear, Rain, Foggy)**
 - ✅ Dungeon entrance system
 - ✅ Multiplayer networking (Unity Netcode for GameObjects)
 - ✅ Host/Join lobby system
@@ -31,12 +33,11 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - ✅ Chat system
 
 ### In Development
-- 🔄 Day/night cycle
-- 🔄 Weather system
 - 🔄 Profession-specific abilities and mechanics
 - 🔄 Dungeon instances and content
 - 🔄 Crafting system
 - 🔄 Advanced inventory management
+- 🔄 Network synchronization for world systems
 
 ## Requirements
 
