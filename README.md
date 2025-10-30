@@ -10,7 +10,7 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **12 Professions**: Each profession specializes in different aspects of gameplay
 - **Palia-style graphics**: Stylized visuals optimized for lower-end hardware
 
-## Current Features (v0.1.0)
+## Current Features (v0.2.0)
 
 ### Implemented
 - ✅ Main Menu system
@@ -19,10 +19,14 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - ✅ Player movement and camera controls
 - ✅ Basic world generation
 - ✅ Dungeon entrance system
-- ✅ Framework for 12-player multiplayer (using Unity Netcode)
+- ✅ **Multiplayer networking (Unity Netcode for GameObjects)**
+- ✅ **Host/Join lobby system**
+- ✅ **Player name synchronization**
+- ✅ **Support for up to 12 players**
 
 ### In Development
-- 🔄 Full multiplayer networking implementation
+- 🔄 Network player prefabs and scene setup
+- 🔄 Chat system
 - 🔄 Profession-specific abilities and mechanics
 - 🔄 Dungeon instances and content
 - 🔄 Crafting and resource gathering
@@ -74,24 +78,53 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **Interact with Dungeon**: E (when near entrance)
 - **Toggle Cursor**: ESC
 
+## Multiplayer (New in v0.2.0!)
+
+Vintage Beef now supports multiplayer for up to 12 players using Unity Netcode for GameObjects.
+
+### Quick Start - Multiplayer
+
+1. **Host a Game:**
+   - Launch the game
+   - Click "Play" in main menu
+   - Enter your username
+   - Click "Host" button
+   - Select your profession
+   - Click "Start Game"
+   - Share your IP address with friends
+
+2. **Join a Game:**
+   - Launch the game
+   - Click "Play" in main menu
+   - Enter your username
+   - Enter the host's IP address
+   - Click "Join" button
+   - Select your profession
+   - Click "Start Game"
+
+For detailed multiplayer setup and troubleshooting, see [MULTIPLAYER.md](MULTIPLAYER.md).
+
 ## Project Structure
 
 ```
 Assets/
 ├── Scenes/
 │   ├── MainMenu.unity      # Main menu scene
-│   ├── Lobby.unity         # Profession selection lobby
+│   ├── Lobby.unity         # Profession selection & multiplayer lobby
 │   └── GameWorld.unity     # Main game world
 ├── Scripts/
-│   ├── ProfessionManager.cs      # Manages all professions
-│   ├── PlayerData.cs             # Player persistent data
-│   ├── PlayerController.cs       # Player movement and camera
-│   ├── GameManager.cs            # Main game state manager
-│   ├── MainMenuUI.cs             # Main menu UI logic
-│   ├── LobbyUI.cs                # Lobby UI and profession selection
-│   ├── DungeonEntrance.cs        # Dungeon entrance interaction
-│   ├── SimpleWorldGenerator.cs   # World generation
-│   └── NetworkManager.cs         # Multiplayer networking (WIP)
+│   ├── ProfessionManager.cs           # Manages all professions
+│   ├── PlayerData.cs                  # Player persistent data
+│   ├── PlayerController.cs            # Player movement and camera
+│   ├── GameManager.cs                 # Main game state manager
+│   ├── MainMenuUI.cs                  # Main menu UI logic
+│   ├── LobbyUI.cs                     # Lobby UI and profession selection
+│   ├── ConnectionUI.cs                # Multiplayer connection UI (NEW v0.2.0)
+│   ├── DungeonEntrance.cs             # Dungeon entrance interaction
+│   ├── SimpleWorldGenerator.cs        # World generation
+│   ├── NetworkManager.cs              # Multiplayer networking (UPDATED v0.2.0)
+│   ├── NetworkPlayer.cs               # Network player component (NEW v0.2.0)
+│   └── Billboard.cs                   # Name tag billboard (NEW v0.2.0)
 ├── Prefabs/                # Game object prefabs (to be added)
 └── Materials/              # Materials and textures (to be added)
 ```
@@ -113,13 +146,15 @@ Assets/
 
 ## Development Roadmap
 
-### Phase 1: Core Systems (Current)
+### Phase 1: Core Systems (In Progress - v0.2.0)
 - [x] Project setup and structure
 - [x] Basic player movement
 - [x] Profession system foundation
 - [x] Menu and lobby systems
 - [x] Basic world generation
-- [ ] Complete multiplayer networking
+- [x] Multiplayer networking core (Host/Join, player sync)
+- [ ] Complete multiplayer (prefabs, scenes, testing)
+- [ ] Basic chat system
 
 ### Phase 2: Gameplay Mechanics
 - [ ] Resource gathering system

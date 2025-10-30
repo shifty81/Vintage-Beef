@@ -24,23 +24,28 @@ This roadmap outlines the planned development phases for Vintage Beef.
 
 **Target:** Q1 2024 (Example timeline)
 
+**Status:** 🔄 In Progress (Core implementation complete, Unity setup needed)
+
 **Priority:** High
 
 **Features:**
-- [ ] Implement Unity Netcode for GameObjects fully
-- [ ] Host/Join lobby system
-- [ ] Player synchronization across network
-- [ ] Username system
-- [ ] Connection UI
+- [x] Implement Unity Netcode for GameObjects fully
+- [x] Host/Join lobby system
+- [x] Player synchronization across network
+- [x] Username system
+- [x] Connection UI
+- [ ] Network player prefab configuration
+- [ ] Unity scene setup for multiplayer
 - [ ] Basic chat system
 - [ ] Test with 12 players
 
 **Technical Tasks:**
-- Integrate NetworkBehaviour components
-- Add NetworkManager setup UI
-- Implement player spawning over network
-- Add disconnection handling
-- Test latency and performance
+- [x] Integrate NetworkBehaviour components
+- [x] Add NetworkManager setup UI
+- [x] Implement player spawning over network
+- [ ] Configure player prefab with NetworkObject
+- [ ] Add disconnection handling
+- [ ] Test latency and performance
 
 **Success Criteria:**
 - 12 players can connect to same game
