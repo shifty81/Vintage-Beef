@@ -1,10 +1,12 @@
 using UnityEngine;
+using Unity.Netcode.Components;
 
 namespace VintageBeef
 {
     /// <summary>
     /// Simple player controller for character movement
     /// Optimized for lower-end hardware with Palia-style performance
+    /// Supports both local and networked gameplay
     /// </summary>
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
@@ -26,6 +28,7 @@ namespace VintageBeef
         private Vector3 velocity;
         private float turnSmoothVelocity;
         private float verticalRotation = 0f;
+        private bool controlsEnabled = true;
 
         private void Awake()
         {
@@ -44,6 +47,8 @@ namespace VintageBeef
 
         private void Update()
         {
+            if (!controlsEnabled) return;
+
             HandleMovement();
             HandleCamera();
         }
@@ -112,6 +117,7 @@ namespace VintageBeef
 
         public void EnableControls(bool enable)
         {
+            controlsEnabled = enable;
             enabled = enable;
             Cursor.lockState = enable ? CursorLockMode.Locked : CursorLockMode.None;
             Cursor.visible = !enable;
