@@ -79,16 +79,61 @@ The multiplayer system uses Unity Netcode for GameObjects to support up to 12 pl
 - ✅ Support for up to 12 players
 - ✅ Name display above players
 - ✅ Connection UI in lobby
+- ✅ **Basic chat system with commands**
+- ✅ **System messages for player events**
 
 ### To Be Implemented (Future)
 - ❌ Voice chat
-- ❌ Text chat system
+- ❌ Advanced chat features (private messages, emojis)
 - ❌ Player inventory synchronization
 - ❌ Resource gathering synchronization
 - ❌ Dungeon instancing
 - ❌ Dedicated server support
 - ❌ Reconnection handling
 - ❌ Save/Load for multiplayer sessions
+
+## Chat System
+
+### Using Chat
+
+1. **Open Chat:**
+   - Press `Enter` key to open chat panel
+
+2. **Send Message:**
+   - Type your message
+   - Press `Enter` to send
+   - Chat closes automatically if message is empty
+
+3. **Available Commands:**
+   - `/help` - Show available commands
+   - `/players` - Show number of connected players
+   - `/time` - Show current server time
+
+### Chat Features
+
+- **Text Messages:** Send messages to all players
+- **System Messages:** Automatic announcements for player join/leave events
+- **Commands:** Use / prefix for commands
+- **Color Coding:**
+  - Yellow: Player messages
+  - Cyan: System messages
+- **Message History:** Last 50 messages saved
+- **Auto-scroll:** Automatically scrolls to newest messages
+
+### Chat Controls
+
+While chat is open:
+- Player movement is disabled
+- Cursor is unlocked
+- Type and press Enter to send
+- Press Enter with empty message to close
+
+### Adding Custom Commands
+
+Developers can add commands in `ChatManager.cs`:
+1. Add case in `HandleCommand()` method
+2. Implement command logic
+3. Use `SendSystemMessageToClient()` for responses
 
 ## Network Architecture
 
