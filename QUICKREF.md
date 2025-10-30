@@ -57,19 +57,30 @@ Vintage-Beef/
 
 | Script | Purpose |
 |--------|---------|
+| **Core Systems** |
 | `ProfessionManager.cs` | Manages all 12 professions |
 | `PlayerData.cs` | Stores player's selected profession |
 | `PlayerController.cs` | Handles movement and camera |
 | `GameManager.cs` | Controls game state and spawning |
+| **UI Systems** |
 | `MainMenuUI.cs` | Main menu logic |
 | `LobbyUI.cs` | Profession selection UI |
-| `ConnectionUI.cs` | **NEW v0.2.0** - Multiplayer lobby |
-| `SimpleWorldGenerator.cs` | Creates game world |
+| `ConnectionUI.cs` | **v0.2.0** - Multiplayer lobby |
+| `InventoryUI.cs` | **v0.3.0** - Inventory display |
+| **World Generation** |
+| `SimpleWorldGenerator.cs` | Basic world generation |
+| `ProceduralWorldGenerator.cs` | **v0.3.0** - Advanced terrain & biomes |
+| `DayNightCycle.cs` | **v0.3.0** - Time of day system |
+| `WeatherSystem.cs` | **v0.3.0** - Weather effects |
+| **Gameplay** |
 | `DungeonEntrance.cs` | Dungeon interaction points |
-| `NetworkManager.cs` | **UPDATED v0.2.0** - Multiplayer networking |
-| `NetworkPlayer.cs` | **NEW v0.2.0** - Network player sync |
-| `ChatManager.cs` | **NEW v0.2.0** - In-game chat |
-| `Billboard.cs` | **NEW v0.2.0** - Name tag rendering |
+| `ResourceNode.cs` | **v0.3.0** - Gatherable resources |
+| `PlayerInventory.cs` | **v0.3.0** - Inventory system |
+| **Networking** |
+| `NetworkManager.cs` | **v0.2.0** - Multiplayer networking |
+| `NetworkPlayer.cs` | **v0.2.0** - Network player sync |
+| `ChatManager.cs` | **v0.2.0** - In-game chat |
+| `Billboard.cs` | **v0.2.0** - Name tag rendering |
 
 ## 🔧 Common Unity Operations
 
@@ -234,8 +245,8 @@ GameWorld.unity
 | Version | Status | Features |
 |---------|--------|----------|
 | v0.1.0 | ✅ Complete | Foundation, basic systems |
-| v0.2.0 | ✅ Complete (Scripts) | Multiplayer networking, chat |
-| v0.3.0 | 📋 Planned | World generation |
+| v0.2.0 | ✅ Complete | Multiplayer networking, chat |
+| v0.3.0 | ✅ Complete | World generation, biomes, inventory, day/night, weather |
 | v0.4.0 | 📋 Planned | Crafting & professions |
 
 ## 🔗 Quick Links
