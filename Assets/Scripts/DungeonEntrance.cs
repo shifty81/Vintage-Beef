@@ -10,8 +10,6 @@ namespace VintageBeef
     {
         [Header("Dungeon Settings")]
         [SerializeField] private string dungeonName = "Unknown Dungeon";
-        [SerializeField] private int recommendedLevel = 1;
-        [SerializeField] private int maxPlayers = 4;
 
         [Header("Visual Settings")]
         [SerializeField] private Color glowColor = Color.cyan;

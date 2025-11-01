@@ -29,19 +29,13 @@ namespace VintageBeef.World
 
         [Header("Audio")]
         [SerializeField] private AudioClip rainSound;
-        [SerializeField] private AudioClip windSound;
 
         private WeatherType currentWeather = WeatherType.Clear;
         private WeatherType targetWeather = WeatherType.Clear;
         private float transitionProgress = 1f;
-        private float checkTimer = 0f;
-
-        private DayNightCycle dayNightCycle;
 
         private void Start()
         {
-            dayNightCycle = GetComponent<DayNightCycle>();
-            
             if (rainParticles == null)
             {
                 CreateRainParticles();

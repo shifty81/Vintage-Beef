@@ -24,7 +24,6 @@ namespace VintageBeef.Network
 
         [Header("Settings")]
         [SerializeField] private KeyCode toggleChatKey = KeyCode.Return;
-        [SerializeField] private KeyCode sendMessageKey = KeyCode.Return;
 
         private Queue<string> messages = new Queue<string>();
         private bool isChatOpen = false;
