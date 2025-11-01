@@ -123,7 +123,7 @@ namespace VintageBeef
                 response.Position = spawnPosition + randomOffset;
                 response.Rotation = Quaternion.identity;
 
-                Debug.Log($"Player connection approved. Spawn position: {response.Position}. Players: {currentPlayers + 1}/{maxPlayers}");
+                Debug.Log($"Player connection approved. Spawn position: {response.Position}. Current players: {currentPlayers}/{maxPlayers}, new player joining");
             }
             
             response.Pending = false;
