@@ -96,17 +96,37 @@ namespace VintageBeef
         private void ApprovalCheck(Unity.Netcode.NetworkManager.ConnectionApprovalRequest request, 
                                    Unity.Netcode.NetworkManager.ConnectionApprovalResponse response)
         {
-            // Simple approval - accept all connections up to max players
-            response.Approved = true;
-            response.CreatePlayerObject = true;
+            Network.VintageBeefNetworkManager networkManager = Network.VintageBeefNetworkManager.Instance;
+            Unity.Netcode.NetworkManager netManager = networkManager?.GetNetworkManager();
             
-            // Random spawn position around spawn point
-            Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
-            randomOffset.y = 0; // Keep on ground level
-            response.Position = spawnPosition + randomOffset;
-            response.Rotation = Quaternion.identity;
+            // Check if we've reached max players (including the host)
+            int maxPlayers = networkManager?.GetMaxPlayers() ?? 12;
+            int currentPlayers = netManager?.ConnectedClientsIds.Count ?? 0;
+            
+            if (currentPlayers >= maxPlayers)
+            {
+                // Reject connection - server is full
+                response.Approved = false;
+                response.Reason = "Server is full";
+                response.CreatePlayerObject = false;
+                Debug.Log($"Player connection rejected. Server is full ({currentPlayers}/{maxPlayers})");
+            }
+            else
+            {
+                // Accept connection
+                response.Approved = true;
+                response.CreatePlayerObject = true;
+                
+                // Random spawn position around spawn point
+                Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
+                randomOffset.y = 0; // Keep on ground level
+                response.Position = spawnPosition + randomOffset;
+                response.Rotation = Quaternion.identity;
 
-            Debug.Log($"Player connection approved. Spawn position: {response.Position}");
+                Debug.Log($"Player connection approved. Spawn position: {response.Position}. Players: {currentPlayers + 1}/{maxPlayers}");
+            }
+            
+            response.Pending = false;
         }
 
         private void SpawnPlayer()

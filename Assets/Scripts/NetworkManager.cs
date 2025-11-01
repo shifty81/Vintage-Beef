@@ -60,7 +60,8 @@ namespace VintageBeef.Network
             // Configure NetworkManager
             if (networkManager != null)
             {
-                networkManager.NetworkConfig.MaxConnections = (uint)maxPlayers;
+                // Enable connection approval to allow max player limit enforcement
+                networkManager.NetworkConfig.ConnectionApproval = true;
             }
         }
 
