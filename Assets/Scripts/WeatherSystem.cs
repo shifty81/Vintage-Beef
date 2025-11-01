@@ -33,14 +33,9 @@ namespace VintageBeef.World
         private WeatherType currentWeather = WeatherType.Clear;
         private WeatherType targetWeather = WeatherType.Clear;
         private float transitionProgress = 1f;
-        private float checkTimer = 0f;
-
-        private DayNightCycle dayNightCycle;
 
         private void Start()
         {
-            dayNightCycle = GetComponent<DayNightCycle>();
-            
             if (rainParticles == null)
             {
                 CreateRainParticles();
