@@ -121,7 +121,7 @@ namespace VintageBeef.UI
                 if (i < items.Count)
                 {
                     InventorySlot item = items[i];
-                    slotUI.SetItem(item.itemName, item.quantity, item.itemType);
+                    slotUI.SetItem(item.itemName, item.quantity);
                 }
                 else
                 {
@@ -198,7 +198,6 @@ namespace VintageBeef.UI
     {
         private TMP_Text nameText;
         private TMP_Text quantityText;
-        private bool isEmpty = true;
 
         private void Awake()
         {
@@ -206,10 +205,8 @@ namespace VintageBeef.UI
             quantityText = transform.Find("Quantity")?.GetComponent<TMP_Text>();
         }
 
-        public void SetItem(string itemName, int quantity, string itemType)
+        public void SetItem(string itemName, int quantity)
         {
-            isEmpty = false;
-            
             if (nameText != null)
             {
                 nameText.text = itemName;
@@ -223,8 +220,6 @@ namespace VintageBeef.UI
 
         public void SetEmpty()
         {
-            isEmpty = true;
-            
             if (nameText != null)
             {
                 nameText.text = "";

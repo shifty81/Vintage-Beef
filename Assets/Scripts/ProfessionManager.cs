@@ -12,14 +12,11 @@ namespace VintageBeef
     {
         public string professionName;
         public string description;
-        public Sprite icon;
-        public Color themeColor;
         
         public Profession(string name, string desc)
         {
             professionName = name;
             description = desc;
-            themeColor = Color.white;
         }
     }
 
