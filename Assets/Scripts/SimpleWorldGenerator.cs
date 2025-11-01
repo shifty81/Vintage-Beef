@@ -11,7 +11,6 @@ namespace VintageBeef
     {
         [Header("World Settings")]
         [SerializeField] private int worldSize = 100;
-        [SerializeField] private float tileSize = 1f;
         
         [Header("Dungeon Settings")]
         [SerializeField] private int numberOfDungeons = 5;
