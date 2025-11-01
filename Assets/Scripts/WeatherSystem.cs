@@ -29,7 +29,6 @@ namespace VintageBeef.World
 
         [Header("Audio")]
         [SerializeField] private AudioClip rainSound;
-        [SerializeField] private AudioClip windSound;
 
         private WeatherType currentWeather = WeatherType.Clear;
         private WeatherType targetWeather = WeatherType.Clear;

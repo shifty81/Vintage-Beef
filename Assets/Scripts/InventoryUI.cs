@@ -20,7 +20,6 @@ namespace VintageBeef.UI
 
         [Header("Settings")]
         [SerializeField] private KeyCode toggleKey = KeyCode.I;
-        [SerializeField] private int slotsPerRow = 6;
 
         private PlayerInventory playerInventory;
         private List<InventorySlotUI> slotUIs = new List<InventorySlotUI>();
