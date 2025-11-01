@@ -30,8 +30,13 @@ namespace VintageBeef.World
         [Header("Dungeon Settings")]
         [SerializeField] private int numberOfDungeons = 8;
 
+        [Header("Housing Settings")]
+        [SerializeField] private bool enableHousingAreas = true;
+        [SerializeField] private int numberOfHousingAreas = 4;
+
         private System.Random rng;
         private Dictionary<Vector2Int, TerrainChunk> chunks = new Dictionary<Vector2Int, TerrainChunk>();
+        private HousingManager housingManager;
 
         private void Start()
         {
@@ -55,6 +60,12 @@ namespace VintageBeef.World
             }
 
             PlaceDungeonEntrances();
+
+            // Generate housing areas after world generation
+            if (enableHousingAreas)
+            {
+                GenerateHousingAreas();
+            }
 
             Debug.Log($"World generation complete! Generated {chunks.Count} chunks.");
         }
@@ -387,6 +398,24 @@ namespace VintageBeef.World
             float z = (float)(rng.NextDouble() * worldSize - halfSize);
             float y = GetTerrainHeight(x, z);
             return new Vector3(x, y + 2f, z);
+        }
+
+        private void GenerateHousingAreas()
+        {
+            Debug.Log($"[Procedural World Generator] Generating housing areas...");
+
+            // Create or get housing manager
+            housingManager = HousingManager.Instance;
+            if (housingManager == null)
+            {
+                GameObject managerObj = new GameObject("HousingManager");
+                housingManager = managerObj.AddComponent<HousingManager>();
+            }
+
+            // Generate housing areas with world configuration
+            housingManager.GenerateHousingAreas(chunkSize, worldSize);
+            
+            Debug.Log($"[Procedural World Generator] Housing areas generation complete!");
         }
     }
 
