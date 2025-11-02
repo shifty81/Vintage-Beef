@@ -10,7 +10,7 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **12 Professions**: Each profession specializes in different aspects of gameplay
 - **Palia-style graphics**: Stylized visuals optimized for lower-end hardware
 
-## Current Features (v0.3.0 - In Development)
+## Current Features (v0.3.1 - In Development)
 
 ### Implemented
 - ✅ Main Menu system
@@ -19,6 +19,8 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - ✅ Player movement and camera controls
 - ✅ **Procedural world generation with biomes**
 - ✅ **Multiple biomes (Forest, Plains, Desert, Mountains)**
+- ✅ **Procedural terrain textures** (NEW!)
+- ✅ **TerrainManager for proper player spawning** (NEW!)
 - ✅ **Resource nodes (Trees, Rocks, Plants)**
 - ✅ **Gathering mechanics with respawn**
 - ✅ **Inventory system with stacking**
@@ -33,6 +35,7 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - ✅ Chat system
 
 ### In Development
+- 🔄 Terraforming system (foundation in place)
 - 🔄 Profession-specific abilities and mechanics
 - 🔄 Dungeon instances and content
 - 🔄 Crafting system
@@ -126,14 +129,17 @@ Assets/
 │   ├── PlayerData.cs                  # Player persistent data
 │   ├── PlayerController.cs            # Player movement and camera
 │   ├── GameManager.cs                 # Main game state manager
+│   ├── TerrainManager.cs              # Terrain coordination and spawning (NEW v0.3.1)
+│   ├── TerrainTextureGenerator.cs     # Procedural texture generation (NEW v0.3.1)
 │   ├── MainMenuUI.cs                  # Main menu UI logic
 │   ├── LobbyUI.cs                     # Lobby UI and profession selection
-│   ├── ConnectionUI.cs                # Multiplayer connection UI (NEW v0.2.0)
+│   ├── ConnectionUI.cs                # Multiplayer connection UI
 │   ├── DungeonEntrance.cs             # Dungeon entrance interaction
-│   ├── SimpleWorldGenerator.cs        # World generation
-│   ├── NetworkManager.cs              # Multiplayer networking (UPDATED v0.2.0)
-│   ├── NetworkPlayer.cs               # Network player component (NEW v0.2.0)
-│   └── Billboard.cs                   # Name tag billboard (NEW v0.2.0)
+│   ├── ProceduralWorldGenerator.cs    # Advanced world generation with biomes
+│   ├── SimpleWorldGenerator.cs        # Simple flat world generation
+│   ├── NetworkManager.cs              # Multiplayer networking
+│   ├── NetworkPlayer.cs               # Network player component
+│   └── Billboard.cs                   # Name tag billboard
 ├── Prefabs/                # Game object prefabs (to be added)
 └── Materials/              # Materials and textures (to be added)
 ```
@@ -198,6 +204,24 @@ Following Palia's approach, Vintage Beef aims for:
 - Clear, readable art style
 - Warm, inviting color palette
 - Efficient use of resources (textures, polygons, shaders)
+
+## Terrain System (NEW in v0.3.1!)
+
+Vintage Beef now features an advanced terrain generation system with:
+- **Proper player spawning:** Players always spawn at correct terrain height
+- **Procedural textures:** Biome-based textures generated at runtime
+- **TerrainManager:** Centralized terrain coordination
+- **Terraforming foundation:** API hooks for future voxel-based terrain editing
+
+### Quick Setup
+
+In GameWorld scene:
+1. Create empty GameObject named "TerrainSystem"
+2. Add `TerrainManager` component
+3. Check "Use Procedural Terrain" for varied landscape
+4. Press Play - terrain generates automatically with textures!
+
+For detailed information, see [TERRAIN_SYSTEM.md](TERRAIN_SYSTEM.md).
 
 ## License
 
