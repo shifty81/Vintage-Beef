@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using VintageBeef.World;
 
 namespace VintageBeef.Voxel
 {
@@ -355,13 +356,6 @@ namespace VintageBeef.Voxel
             return new Voxel(VoxelType.Air, 0);
         }
 
-        // Use existing BiomeType enum from ProceduralWorldGenerator
-        private enum BiomeType
-        {
-            Forest,
-            Plains,
-            Desert,
-            Mountains
-        }
+        // Note: BiomeType is defined in VintageBeef.World namespace (ProceduralWorldGenerator.cs)
     }
 }

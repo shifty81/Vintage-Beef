@@ -1,5 +1,6 @@
 using UnityEngine;
 using VintageBeef.World;
+using VintageBeef.Voxel;
 
 namespace VintageBeef
 {
@@ -73,10 +74,10 @@ namespace VintageBeef
         private void InitializeVoxelTerrain()
         {
             // Use or create voxel generator
-            voxelGenerator = GetComponent<VintageBeef.Voxel.VoxelWorldGenerator>();
+            voxelGenerator = GetComponent<VoxelWorldGenerator>();
             if (voxelGenerator == null)
             {
-                voxelGenerator = gameObject.AddComponent<VintageBeef.Voxel.VoxelWorldGenerator>();
+                voxelGenerator = gameObject.AddComponent<VoxelWorldGenerator>();
             }
 
             // Disable other generators
@@ -162,7 +163,7 @@ namespace VintageBeef
             // Start from a high point and scan down
             for (float y = 100f; y >= 0f; y -= 1f)
             {
-                VintageBeef.Voxel.Voxel voxel = voxelGenerator.GetVoxel(new Vector3(worldX, y, worldZ));
+                Voxel voxel = voxelGenerator.GetVoxel(new Vector3(worldX, y, worldZ));
                 if (voxel.IsSolid())
                 {
                     return y + 1f; // Return position above solid voxel

@@ -12,6 +12,9 @@ namespace VintageBeef.World
         [SerializeField] private int textureSize = 256;
         [SerializeField] private float noiseScale = 0.1f;
 
+        // Constants for texture generation
+        private const float GrassBladeChance = 0.05f;
+
         /// <summary>
         /// Creates a material with a terrain texture for the given biome
         /// </summary>
@@ -153,7 +156,7 @@ namespace VintageBeef.World
                     float noise = Mathf.PerlinNoise(x * noiseScale, y * noiseScale);
                     
                     // Add grass blade detail
-                    if (Random.value < 0.05f)
+                    if (Random.value < GrassBladeChance)
                     {
                         noise = Mathf.Clamp01(noise + 0.15f);
                     }

@@ -21,6 +21,8 @@ namespace VintageBeef.Voxel
         private MeshCollider meshCollider;
         private bool isDirty = false;
 
+        private static Material sharedMaterial; // Shared material for all chunks
+
         public void Initialize(Vector3Int position, int size)
         {
             chunkPosition = position;
@@ -31,10 +33,13 @@ namespace VintageBeef.Voxel
             meshRenderer = GetComponent<MeshRenderer>();
             meshCollider = GetComponent<MeshCollider>();
 
-            // Set up material
-            Material mat = new Material(Shader.Find("Standard"));
-            mat.SetFloat("_Glossiness", 0.1f);
-            meshRenderer.material = mat;
+            // Use shared material to reduce memory usage
+            if (sharedMaterial == null)
+            {
+                sharedMaterial = new Material(Shader.Find("Standard"));
+                sharedMaterial.SetFloat("_Glossiness", 0.1f);
+            }
+            meshRenderer.material = sharedMaterial;
         }
 
         /// <summary>

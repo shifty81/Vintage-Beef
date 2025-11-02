@@ -20,6 +20,9 @@ namespace VintageBeef.Voxel
         private Camera playerCamera;
         private float lastToolUseTime;
 
+        // Cached screen center for crosshair
+        private Vector2 ScreenCenter => new Vector2(Screen.width / 2, Screen.height / 2);
+
         private void Start()
         {
             worldGenerator = FindObjectOfType<VoxelWorldGenerator>();
@@ -86,7 +89,7 @@ namespace VintageBeef.Voxel
             hitPosition = Vector3.zero;
             hitVoxel = false;
 
-            Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            Ray ray = playerCamera.ScreenPointToRay(ScreenCenter);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, maxReachDistance))
@@ -114,7 +117,7 @@ namespace VintageBeef.Voxel
         private void PlaceVoxel(Vector3 worldPosition)
         {
             // Calculate position where voxel should be placed (adjacent to hit surface)
-            Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            Ray ray = playerCamera.ScreenPointToRay(ScreenCenter);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, maxReachDistance))
@@ -147,7 +150,7 @@ namespace VintageBeef.Voxel
 
             // Draw crosshair
             float size = 10f;
-            Vector2 center = new Vector2(Screen.width / 2, Screen.height / 2);
+            Vector2 center = ScreenCenter;
             
             GUI.color = Color.white;
             GUI.Box(new Rect(center.x - size / 2, center.y - 1, size, 2), "");
