@@ -7,20 +7,29 @@ namespace VintageBeef
     /// Manages terrain generation and coordinates with player spawning
     /// Ensures players spawn at proper terrain height
     /// Provides API for terrain modification (future terraforming support)
+    /// Supports both heightmap and voxel-based terrain
     /// </summary>
     public class TerrainManager : MonoBehaviour
     {
         public static TerrainManager Instance { get; private set; }
 
-        [Header("Terrain Settings")]
-        [SerializeField] private bool useProceduralTerrain = true;
+        [Header("Terrain Type")]
+        [SerializeField] private TerrainType terrainType = TerrainType.Procedural;
         [SerializeField] private Vector3 spawnPoint = new Vector3(0, 0, 0);
 
         [Header("References")]
         private ProceduralWorldGenerator proceduralGenerator;
         private SimpleWorldGenerator simpleGenerator;
+        private VintageBeef.Voxel.VoxelWorldGenerator voxelGenerator;
 
         private bool isTerrainReady = false;
+
+        public enum TerrainType
+        {
+            Simple,      // Flat terrain
+            Procedural,  // Heightmap-based procedural terrain
+            Voxel        // Voxel-based fully terraformable terrain
+        }
 
         private void Awake()
         {
@@ -44,41 +53,77 @@ namespace VintageBeef
         {
             Debug.Log("[TerrainManager] Initializing terrain system...");
 
-            if (useProceduralTerrain)
+            switch (terrainType)
             {
-                // Use or create procedural generator
-                proceduralGenerator = GetComponent<ProceduralWorldGenerator>();
-                if (proceduralGenerator == null)
-                {
-                    proceduralGenerator = gameObject.AddComponent<ProceduralWorldGenerator>();
-                }
-
-                // Disable simple generator if present
-                simpleGenerator = GetComponent<SimpleWorldGenerator>();
-                if (simpleGenerator != null)
-                {
-                    simpleGenerator.enabled = false;
-                }
-            }
-            else
-            {
-                // Use simple generator
-                simpleGenerator = GetComponent<SimpleWorldGenerator>();
-                if (simpleGenerator == null)
-                {
-                    simpleGenerator = gameObject.AddComponent<SimpleWorldGenerator>();
-                }
-
-                // Disable procedural generator if present
-                proceduralGenerator = GetComponent<ProceduralWorldGenerator>();
-                if (proceduralGenerator != null)
-                {
-                    proceduralGenerator.enabled = false;
-                }
+                case TerrainType.Voxel:
+                    InitializeVoxelTerrain();
+                    break;
+                case TerrainType.Procedural:
+                    InitializeProceduralTerrain();
+                    break;
+                case TerrainType.Simple:
+                    InitializeSimpleTerrain();
+                    break;
             }
 
             // Wait a frame for terrain to generate
             Invoke(nameof(MarkTerrainReady), 0.5f);
+        }
+
+        private void InitializeVoxelTerrain()
+        {
+            // Use or create voxel generator
+            voxelGenerator = GetComponent<VintageBeef.Voxel.VoxelWorldGenerator>();
+            if (voxelGenerator == null)
+            {
+                voxelGenerator = gameObject.AddComponent<VintageBeef.Voxel.VoxelWorldGenerator>();
+            }
+
+            // Disable other generators
+            DisableGenerator(proceduralGenerator);
+            DisableGenerator(simpleGenerator);
+
+            Debug.Log("[TerrainManager] Voxel terrain initialized");
+        }
+
+        private void InitializeProceduralTerrain()
+        {
+            // Use or create procedural generator
+            proceduralGenerator = GetComponent<ProceduralWorldGenerator>();
+            if (proceduralGenerator == null)
+            {
+                proceduralGenerator = gameObject.AddComponent<ProceduralWorldGenerator>();
+            }
+
+            // Disable other generators
+            DisableGenerator(simpleGenerator);
+            DisableGenerator(voxelGenerator);
+
+            Debug.Log("[TerrainManager] Procedural terrain initialized");
+        }
+
+        private void InitializeSimpleTerrain()
+        {
+            // Use simple generator
+            simpleGenerator = GetComponent<SimpleWorldGenerator>();
+            if (simpleGenerator == null)
+            {
+                simpleGenerator = gameObject.AddComponent<SimpleWorldGenerator>();
+            }
+
+            // Disable other generators
+            DisableGenerator(proceduralGenerator);
+            DisableGenerator(voxelGenerator);
+
+            Debug.Log("[TerrainManager] Simple terrain initialized");
+        }
+
+        private void DisableGenerator(MonoBehaviour generator)
+        {
+            if (generator != null)
+            {
+                generator.enabled = false;
+            }
         }
 
         private void MarkTerrainReady()
@@ -92,7 +137,12 @@ namespace VintageBeef
         /// </summary>
         public float GetTerrainHeight(float worldX, float worldZ)
         {
-            if (useProceduralTerrain && proceduralGenerator != null)
+            if (terrainType == TerrainType.Voxel && voxelGenerator != null)
+            {
+                // For voxel terrain, scan downward to find surface
+                return GetVoxelSurfaceHeight(worldX, worldZ);
+            }
+            else if (terrainType == TerrainType.Procedural && proceduralGenerator != null)
             {
                 // Access the procedural generator's height function
                 return GetProceduralTerrainHeight(worldX, worldZ);
@@ -102,6 +152,23 @@ namespace VintageBeef
                 // Simple flat terrain
                 return 0f;
             }
+        }
+
+        /// <summary>
+        /// Find surface height for voxel terrain
+        /// </summary>
+        private float GetVoxelSurfaceHeight(float worldX, float worldZ)
+        {
+            // Start from a high point and scan down
+            for (float y = 100f; y >= 0f; y -= 1f)
+            {
+                VintageBeef.Voxel.Voxel voxel = voxelGenerator.GetVoxel(new Vector3(worldX, y, worldZ));
+                if (voxel.IsSolid())
+                {
+                    return y + 1f; // Return position above solid voxel
+                }
+            }
+            return 0f; // Default if no surface found
         }
 
         /// <summary>
