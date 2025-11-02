@@ -10,15 +10,27 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **12 Professions**: Each profession specializes in different aspects of gameplay
 - **Palia-style graphics**: Stylized visuals optimized for lower-end hardware
 
-## Current Features (v0.3.0 - In Development)
+## Current Features (v0.3.1 - Major Update!)
 
 ### Implemented
 - ✅ Main Menu system
 - ✅ Lobby with profession selection
 - ✅ 12 unique professions (Farmer, Blacksmith, Builder, Miner, Hunter, Cook, Tailor, Merchant, Explorer, Engineer, Alchemist, Woodworker)
 - ✅ Player movement and camera controls
-- ✅ **Procedural world generation with biomes**
+- ✅ **THREE Terrain Systems:**
+  - ✅ Simple flat terrain
+  - ✅ Procedural heightmap generation with biomes
+  - ✅ **VOXEL-BASED fully terraformable terrain** (NEW! 🎉)
 - ✅ **Multiple biomes (Forest, Plains, Desert, Mountains)**
+- ✅ **Procedural terrain textures**
+- ✅ **TerrainManager for proper player spawning**
+- ✅ **Fully terraformable voxel world** (NEW! 🎉)
+  - ✅ Chunk-based system (16x16x16 voxels)
+  - ✅ Greedy meshing for performance
+  - ✅ Cave generation with 3D noise
+  - ✅ Real-time terrain modification (dig/build)
+  - ✅ Player terraforming tools
+  - ✅ 13 voxel types (dirt, stone, ores, etc.)
 - ✅ **Resource nodes (Trees, Rocks, Plants)**
 - ✅ **Gathering mechanics with respawn**
 - ✅ **Inventory system with stacking**
@@ -33,11 +45,14 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - ✅ Chat system
 
 ### In Development
+- 🔄 Unity Job System optimization for voxel terrain
+- 🔄 Burst Compiler integration for voxel generation
+- 🔄 Voxel terrain persistence (save/load)
+- 🔄 Networked terraforming (multiplayer sync)
 - 🔄 Profession-specific abilities and mechanics
 - 🔄 Dungeon instances and content
 - 🔄 Crafting system
 - 🔄 Advanced inventory management
-- 🔄 Network synchronization for world systems
 
 ## Requirements
 
@@ -67,6 +82,21 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 
 ### Testing
 
+#### Voxel Terraforming Test (NEW!)
+1. Press Play in Unity Editor
+2. Go to TerrainSystem in Hierarchy
+3. Set TerrainManager → Terrain Type to `Voxel`
+4. Press Play again
+5. Wait for terrain generation (2-3 seconds)
+6. **Terraform Controls:**
+   - **Left Click**: Remove voxels (dig/mine)
+   - **Right Click**: Place voxels (build)
+   - **Keys 1-4**: Change block type (Dirt/Grass/Stone/Sand)
+7. Try digging a hole or building a tower!
+8. Explore caves underground
+
+See **[VOXEL_QUICKSTART.md](VOXEL_QUICKSTART.md)** for detailed voxel terrain guide.
+
 #### Basic Flow Test
 1. Press Play in Unity Editor
 2. Click "Play" button in Main Menu
@@ -78,14 +108,27 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 8. Approach a dungeon entrance and press 'E' to interact
 
 #### Controls
+
+**Basic Movement:**
 - **Movement**: WASD
 - **Look**: Mouse
 - **Jump**: Space
 - **Sprint**: Left Shift
+- **Toggle Cursor**: ESC
+
+**Gameplay:**
 - **Interact/Gather**: E (when near resource or dungeon)
 - **Open Inventory**: I
 - **Open Chat**: Enter
-- **Toggle Cursor**: ESC
+
+**Voxel Terraforming (NEW!):**
+- **Remove Voxel (Dig)**: Left Mouse Click
+- **Place Voxel (Build)**: Right Mouse Click
+- **Change Block Type**: Number keys 1-4
+  - 1: Dirt
+  - 2: Grass
+  - 3: Stone
+  - 4: Sand
 
 ## Multiplayer (New in v0.2.0!)
 
@@ -126,14 +169,17 @@ Assets/
 │   ├── PlayerData.cs                  # Player persistent data
 │   ├── PlayerController.cs            # Player movement and camera
 │   ├── GameManager.cs                 # Main game state manager
+│   ├── TerrainManager.cs              # Terrain coordination and spawning (NEW v0.3.1)
+│   ├── TerrainTextureGenerator.cs     # Procedural texture generation (NEW v0.3.1)
 │   ├── MainMenuUI.cs                  # Main menu UI logic
 │   ├── LobbyUI.cs                     # Lobby UI and profession selection
-│   ├── ConnectionUI.cs                # Multiplayer connection UI (NEW v0.2.0)
+│   ├── ConnectionUI.cs                # Multiplayer connection UI
 │   ├── DungeonEntrance.cs             # Dungeon entrance interaction
-│   ├── SimpleWorldGenerator.cs        # World generation
-│   ├── NetworkManager.cs              # Multiplayer networking (UPDATED v0.2.0)
-│   ├── NetworkPlayer.cs               # Network player component (NEW v0.2.0)
-│   └── Billboard.cs                   # Name tag billboard (NEW v0.2.0)
+│   ├── ProceduralWorldGenerator.cs    # Advanced world generation with biomes
+│   ├── SimpleWorldGenerator.cs        # Simple flat world generation
+│   ├── NetworkManager.cs              # Multiplayer networking
+│   ├── NetworkPlayer.cs               # Network player component
+│   └── Billboard.cs                   # Name tag billboard
 ├── Prefabs/                # Game object prefabs (to be added)
 └── Materials/              # Materials and textures (to be added)
 ```
@@ -198,6 +244,45 @@ Following Palia's approach, Vintage Beef aims for:
 - Clear, readable art style
 - Warm, inviting color palette
 - Efficient use of resources (textures, polygons, shaders)
+
+## Terrain System (NEW in v0.3.1!)
+
+Vintage Beef now features **three terrain systems** to choose from:
+
+### 1. Simple Terrain
+- Flat plane for quick testing
+- Best performance
+- Basic gameplay
+
+### 2. Procedural Terrain (Heightmap)
+- Varied landscapes with hills and valleys
+- Multiple biomes with different colors
+- Good performance
+- Procedural textures
+- Best for exploration without terraforming
+
+### 3. Voxel Terrain (FULLY TERRAFORMABLE! 🎉)
+- **Complete terrain modification** - dig, mine, build!
+- **Chunk-based system** for infinite worlds
+- **Cave generation** with 3D noise
+- **Real-time updates** - changes appear instantly
+- **13 voxel types** including ores
+- **Greedy meshing** for optimized rendering
+- **Player tools** for easy terraforming
+- Minecraft-style block building
+
+**Quick Setup:**
+1. In GameWorld scene, create "TerrainSystem" GameObject
+2. Add `TerrainManager` component
+3. Set **Terrain Type** to your choice (Voxel for terraforming!)
+4. Add `VoxelTerraformingTool` to Player for digging/building
+5. Press Play!
+
+**Documentation:**
+- **[VOXEL_QUICKSTART.md](VOXEL_QUICKSTART.md)** - Get started in 5 minutes
+- **[VOXEL_SYSTEM.md](VOXEL_SYSTEM.md)** - Complete technical documentation
+- **[TERRAIN_SYSTEM.md](TERRAIN_SYSTEM.md)** - General terrain info
+- **[VISUAL_SETUP.md](VISUAL_SETUP.md)** - Lighting and visual improvements
 
 ## License
 

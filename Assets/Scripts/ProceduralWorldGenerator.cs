@@ -34,13 +34,24 @@ namespace VintageBeef.World
         [SerializeField] private bool enableHousingAreas = true;
         [SerializeField] private int numberOfHousingAreas = 4;
 
+        [Header("Rendering")]
+        [SerializeField] private bool useProceduralTextures = true;
+
         private System.Random rng;
         private Dictionary<Vector2Int, TerrainChunk> chunks = new Dictionary<Vector2Int, TerrainChunk>();
         private HousingManager housingManager;
+        private TerrainTextureGenerator textureGenerator;
 
         private void Start()
         {
             rng = new System.Random(seed);
+            
+            // Initialize texture generator if using procedural textures
+            if (useProceduralTextures)
+            {
+                textureGenerator = gameObject.AddComponent<TerrainTextureGenerator>();
+            }
+            
             GenerateWorld();
         }
 
@@ -152,9 +163,22 @@ namespace VintageBeef.World
             meshFilter.mesh = mesh;
 
             MeshRenderer renderer = chunk.gameObject.AddComponent<MeshRenderer>();
-            Material mat = new Material(Shader.Find("Standard"));
-            mat.SetFloat("_Glossiness", 0.1f); // Low glossiness for Palia-style look
-            renderer.material = mat;
+            
+            // Use procedural textures if enabled and texture generator exists
+            if (useProceduralTextures && textureGenerator != null)
+            {
+                // Get dominant biome for this chunk
+                BiomeType chunkBiome = GetBiomeAt(offsetX + chunkSize / 2f, offsetZ + chunkSize / 2f);
+                Material mat = textureGenerator.CreateBiomeMaterial(chunkBiome);
+                renderer.material = mat;
+            }
+            else
+            {
+                // Use vertex colors (original approach)
+                Material mat = new Material(Shader.Find("Standard"));
+                mat.SetFloat("_Glossiness", 0.1f);
+                renderer.material = mat;
+            }
 
             MeshCollider collider = chunk.gameObject.AddComponent<MeshCollider>();
             collider.sharedMesh = mesh;

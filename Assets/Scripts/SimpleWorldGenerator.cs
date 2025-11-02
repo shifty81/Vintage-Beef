@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using VintageBeef.World;
 
 namespace VintageBeef
 {
@@ -18,9 +19,18 @@ namespace VintageBeef
 
         [Header("Terrain Settings")]
         [SerializeField] private Material groundMaterial;
+        [SerializeField] private bool useProceduralTexture = true;
+
+        private TerrainTextureGenerator textureGenerator;
 
         private void Start()
         {
+            // Initialize texture generator if using procedural textures
+            if (useProceduralTexture)
+            {
+                textureGenerator = gameObject.AddComponent<TerrainTextureGenerator>();
+            }
+            
             GenerateWorld();
         }
 
@@ -45,9 +55,19 @@ namespace VintageBeef
             ground.transform.position = Vector3.zero;
             ground.transform.localScale = new Vector3(worldSize / 10f, 1f, worldSize / 10f);
 
+            // Apply material or generate texture
             if (groundMaterial != null)
             {
                 ground.GetComponent<Renderer>().material = groundMaterial;
+            }
+            else if (useProceduralTexture && textureGenerator != null)
+            {
+                // Use procedurally generated grass texture
+                Material mat = new Material(Shader.Find("Standard"));
+                mat.mainTexture = textureGenerator.CreateGrassTexture();
+                mat.SetFloat("_Glossiness", 0.1f);
+                mat.SetFloat("_Metallic", 0.0f);
+                ground.GetComponent<Renderer>().material = mat;
             }
             else
             {

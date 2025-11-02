@@ -52,19 +52,33 @@ namespace VintageBeef
             // Spawn player in game world
             if (scene.name == "GameWorld")
             {
-                // Check if we're in multiplayer mode
-                Network.VintageBeefNetworkManager networkManager = Network.VintageBeefNetworkManager.Instance;
-                isMultiplayerMode = networkManager != null && 
-                                   (networkManager.IsHost() || networkManager.IsClient());
+                // Wait for terrain to be ready before spawning
+                StartCoroutine(WaitForTerrainAndSpawn());
+            }
+        }
 
-                if (isMultiplayerMode)
-                {
-                    SetupNetworkSpawning();
-                }
-                else
-                {
-                    SpawnPlayer();
-                }
+        private System.Collections.IEnumerator WaitForTerrainAndSpawn()
+        {
+            // Wait for TerrainManager to be ready
+            while (TerrainManager.Instance == null || !TerrainManager.Instance.IsTerrainReady())
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            Debug.Log("[GameManager] Terrain ready, spawning player...");
+
+            // Check if we're in multiplayer mode
+            Network.VintageBeefNetworkManager networkManager = Network.VintageBeefNetworkManager.Instance;
+            isMultiplayerMode = networkManager != null && 
+                               (networkManager.IsHost() || networkManager.IsClient());
+
+            if (isMultiplayerMode)
+            {
+                SetupNetworkSpawning();
+            }
+            else
+            {
+                SpawnPlayer();
             }
         }
 
@@ -117,10 +131,21 @@ namespace VintageBeef
                 response.Approved = true;
                 response.CreatePlayerObject = true;
                 
-                // Random spawn position around spawn point
-                Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
-                randomOffset.y = 0; // Keep on ground level
-                response.Position = spawnPosition + randomOffset;
+                // Get spawn position from TerrainManager
+                Vector3 spawnPos = spawnPosition;
+                if (TerrainManager.Instance != null)
+                {
+                    spawnPos = TerrainManager.Instance.GetRandomSpawnPosition(spawnRadius);
+                }
+                else
+                {
+                    // Fallback to random offset
+                    Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
+                    randomOffset.y = 0;
+                    spawnPos = spawnPosition + randomOffset;
+                }
+
+                response.Position = spawnPos;
                 response.Rotation = Quaternion.identity;
 
                 Debug.Log($"Player connection approved. Spawn position: {response.Position}. Current players: {currentPlayers}/{maxPlayers}, new player joining");
@@ -136,24 +161,46 @@ namespace VintageBeef
                 Destroy(currentPlayer);
             }
 
+            // Get safe spawn position from TerrainManager
+            Vector3 safeSpawnPosition = spawnPosition;
+            if (TerrainManager.Instance != null)
+            {
+                safeSpawnPosition = TerrainManager.Instance.GetSafeSpawnPosition();
+                Debug.Log($"[GameManager] Using TerrainManager spawn position: {safeSpawnPosition}");
+            }
+            else
+            {
+                Debug.LogWarning("[GameManager] TerrainManager not found, using default spawn position");
+            }
+
             if (playerPrefab != null)
             {
-                currentPlayer = Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+                currentPlayer = Instantiate(playerPrefab, safeSpawnPosition, Quaternion.identity);
                 currentPlayer.tag = "Player";
                 Debug.Log("Player spawned!");
             }
             else
             {
                 // Create default player if no prefab
-                CreateDefaultPlayer();
+                CreateDefaultPlayer(safeSpawnPosition);
             }
         }
 
         private void CreateDefaultPlayer()
         {
+            Vector3 safeSpawnPosition = spawnPosition;
+            if (TerrainManager.Instance != null)
+            {
+                safeSpawnPosition = TerrainManager.Instance.GetSafeSpawnPosition();
+            }
+            CreateDefaultPlayer(safeSpawnPosition);
+        }
+
+        private void CreateDefaultPlayer(Vector3 position)
+        {
             currentPlayer = new GameObject("Player");
             currentPlayer.tag = "Player";
-            currentPlayer.transform.position = spawnPosition;
+            currentPlayer.transform.position = position;
 
             // Add character controller
             CharacterController controller = currentPlayer.AddComponent<CharacterController>();
