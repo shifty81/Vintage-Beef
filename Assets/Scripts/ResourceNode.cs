@@ -27,11 +27,13 @@ namespace VintageBeef.World
         private bool isDepleted = false;
         private float respawnTimer = 0f;
         private Renderer[] renderers;
+        private Vector3 originalScale;
 
         private void Awake()
         {
             currentHitPoints = hitPoints;
             renderers = GetComponentsInChildren<Renderer>();
+            originalScale = transform.localScale; // Store original scale for proper shrinking
         }
 
         private void Update()
@@ -126,8 +128,9 @@ namespace VintageBeef.World
                 Debug.LogWarning($"[ResourceNode] Player has no inventory component");
             }
 
-            // Visual feedback - make smaller
-            transform.localScale = transform.localScale * 0.9f;
+            // Visual feedback - scale based on remaining hit points (not compound)
+            float scaleRatio = (float)currentHitPoints / hitPoints;
+            transform.localScale = originalScale * scaleRatio;
 
             if (currentHitPoints <= 0)
             {
@@ -189,8 +192,8 @@ namespace VintageBeef.World
             isDepleted = false;
             currentHitPoints = hitPoints;
             
-            // Reset scale
-            transform.localScale = Vector3.one;
+            // Reset scale to original
+            transform.localScale = originalScale;
             
             // Show the resource
             foreach (Renderer r in renderers)

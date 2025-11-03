@@ -8,6 +8,7 @@ namespace VintageBeef
     /// <summary>
     /// Handles player interaction with world objects like resource nodes
     /// Provides centralized interaction detection and UI feedback
+    /// Requires PlayerInventory component - add it to Player GameObject
     /// </summary>
     [RequireComponent(typeof(PlayerInventory))]
     public class PlayerInteraction : MonoBehaviour
@@ -28,13 +29,8 @@ namespace VintageBeef
 
         private void Awake()
         {
+            // RequireComponent ensures this will exist
             inventory = GetComponent<PlayerInventory>();
-            if (inventory == null)
-            {
-                Debug.LogError("[PlayerInteraction] PlayerInventory component is required! Add it to the Player GameObject.");
-                enabled = false;
-                return;
-            }
         }
 
         private void Start()
