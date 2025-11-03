@@ -51,7 +51,7 @@ If you haven't installed Visual Studio with Unity support yet:
 
 1. **Clone the repository** (if not already done)
    ```bash
-   git clone https://github.com/shifty81/Vintage-Beef.git
+   git clone <repository-url>
    cd Vintage-Beef
    ```
 
@@ -268,7 +268,7 @@ If you're still experiencing problems:
    - Reopen Unity (files will regenerate)
    - Reopen Visual Studio
 
-5. **Check main setup guide:** See [SETUP.md](SETUP.md) for general project setup
+5. **Check main setup guide:** See [`SETUP.md`](SETUP.md) for general project setup
 6. **Create GitHub issue:** If problem persists, create an issue with:
    - Your Unity version
    - Your Visual Studio version
