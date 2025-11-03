@@ -4,6 +4,8 @@ A Unity multiplayer game inspired by Vintage Story mechanics with added dungeons
 
 ## 🚀 Quick Start - Get Playing Now!
 
+**NEW USER?** → Start here: **[START_HERE.md](START_HERE.md)** - Complete getting started guide!
+
 **Want to play immediately?** Choose your path:
 
 - **⚡ Fastest (2 min)**: Open `Assets/Scenes/GameWorld.unity` → Press Play → Walk around!
