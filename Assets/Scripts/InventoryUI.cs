@@ -76,6 +76,13 @@ namespace VintageBeef.UI
                 {
                     localPlayer.EnableControls(false);
                 }
+                
+                // Disable interactions while inventory is open
+                PlayerInteraction interaction = FindLocalPlayerInteraction();
+                if (interaction != null)
+                {
+                    interaction.SetCanInteract(false);
+                }
             }
             else
             {
@@ -84,6 +91,13 @@ namespace VintageBeef.UI
                 if (localPlayer != null)
                 {
                     localPlayer.EnableControls(true);
+                }
+                
+                // Re-enable interactions
+                PlayerInteraction interaction = FindLocalPlayerInteraction();
+                if (interaction != null)
+                {
+                    interaction.SetCanInteract(true);
                 }
             }
         }
@@ -186,6 +200,16 @@ namespace VintageBeef.UI
             if (player != null)
             {
                 return player.GetComponent<PlayerController>();
+            }
+            return null;
+        }
+
+        private PlayerInteraction FindLocalPlayerInteraction()
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                return player.GetComponent<PlayerInteraction>();
             }
             return null;
         }
