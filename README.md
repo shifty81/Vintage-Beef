@@ -2,6 +2,19 @@
 
 A Unity multiplayer game inspired by Vintage Story mechanics with added dungeons, featuring Palia-style graphics for broad hardware compatibility.
 
+## 🚀 Quick Start - Get Playing Now!
+
+**NEW USER?** → Start here: **[START_HERE.md](START_HERE.md)** - Complete getting started guide!
+
+**Want to play immediately?** Choose your path:
+
+- **⚡ Fastest (2 min)**: Open `Assets/Scenes/GameWorld.unity` → Press Play → Walk around!
+- **📋 Guided Setup (5 min)**: See **[SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)** for step-by-step checklist
+- **📖 Detailed Guide (15 min)**: See **[PLAY_NOW.md](PLAY_NOW.md)** for complete setup instructions
+- **🔧 Unity Helper Tool**: In Unity menu → `Vintage Beef → Scene Setup Helper` (auto-setup scenes!)
+
+**All scripts are ready!** Just need to set up Unity scenes to connect everything. The helper tool does most work automatically.
+
 ## Overview
 
 Vintage Beef is a 12-player cooperative multiplayer game that combines:
@@ -62,23 +75,40 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 
 ## Getting Started
 
-### Opening the Project
+### ⚡ Quick Play (2 minutes)
 
-1. Clone this repository
-2. Open Unity Hub
-3. Click "Add" and navigate to the cloned repository folder
-4. Open the project with Unity 2022.3.10f1 or later
+**Fastest way to play:**
+1. Clone and open project in Unity 2022.3.10f1+
+2. Open `Assets/Scenes/GameWorld.unity`
+3. Press Play (▶)
+4. Walk around with WASD, Mouse, Space, Shift!
 
-### Building the Project
+**That's it!** Core gameplay works immediately.
 
-1. Open Unity Editor
-2. Go to `File > Build Settings`
-3. Ensure all three scenes are added and enabled:
-   - MainMenu
-   - Lobby
-   - GameWorld
-4. Select your target platform
-5. Click "Build" or "Build and Run"
+### 🎯 Full Setup (15 minutes)
+
+**For complete experience with menus and all features:**
+
+1. **Use the Scene Setup Helper** (Recommended!)
+   - In Unity menu: `Vintage Beef → Scene Setup Helper`
+   - Click buttons to auto-setup each scene
+   - See **[PLAY_NOW.md](PLAY_NOW.md)** for detailed guide
+
+2. **Or follow the checklist**
+   - See **[SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)** for step-by-step instructions
+
+3. **Configure Build Settings**
+   - File → Build Settings
+   - Add scenes: MainMenu, Lobby, GameWorld
+   - Now full flow works: Menu → Profession → Game
+
+### 📖 Documentation
+
+- **[PLAY_NOW.md](PLAY_NOW.md)** - Complete setup guide (detailed)
+- **[SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)** - Quick setup checklist
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick reference guide
+- **[VOXEL_QUICKSTART.md](VOXEL_QUICKSTART.md)** - Voxel terrain guide
+- **[UNITY_SETUP.md](UNITY_SETUP.md)** - Multiplayer networking setup
 
 ### Testing
 
