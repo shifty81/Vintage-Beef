@@ -9,6 +9,7 @@ namespace VintageBeef
     /// Handles player interaction with world objects like resource nodes
     /// Provides centralized interaction detection and UI feedback
     /// </summary>
+    [RequireComponent(typeof(PlayerInventory))]
     public class PlayerInteraction : MonoBehaviour
     {
         [Header("Interaction Settings")]
@@ -22,6 +23,7 @@ namespace VintageBeef
         
         private ResourceNode nearestResource;
         private PlayerInventory inventory;
+        private Canvas cachedCanvas;
         private bool canInteract = true;
 
         private void Awake()
@@ -29,8 +31,9 @@ namespace VintageBeef
             inventory = GetComponent<PlayerInventory>();
             if (inventory == null)
             {
-                inventory = gameObject.AddComponent<PlayerInventory>();
-                Debug.Log("[PlayerInteraction] Added PlayerInventory component");
+                Debug.LogError("[PlayerInteraction] PlayerInventory component is required! Add it to the Player GameObject.");
+                enabled = false;
+                return;
             }
         }
 
@@ -127,23 +130,33 @@ namespace VintageBeef
             }
         }
 
+        /// <summary>
+        /// Creates interaction prompt UI programmatically.
+        /// Note: For production, consider creating this as a prefab for easier customization.
+        /// This automatic creation ensures the system works out-of-the-box without manual setup.
+        /// </summary>
         private void CreateInteractionPrompt()
         {
-            // Find or create Canvas
-            Canvas canvas = FindObjectOfType<Canvas>();
-            if (canvas == null)
+            // Find or create Canvas (cache for performance)
+            if (cachedCanvas == null)
+            {
+                cachedCanvas = FindObjectOfType<Canvas>();
+            }
+            
+            if (cachedCanvas == null)
             {
                 GameObject canvasObj = new GameObject("WorldCanvas");
-                canvas = canvasObj.AddComponent<Canvas>();
-                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                cachedCanvas = canvasObj.AddComponent<Canvas>();
+                cachedCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
                 canvasObj.AddComponent<UnityEngine.UI.CanvasScaler>();
                 canvasObj.AddComponent<UnityEngine.UI.GraphicRaycaster>();
                 Debug.Log("[PlayerInteraction] Created Canvas for interaction prompt");
             }
 
             // Create prompt panel
+            // TODO: Convert to prefab instantiation for better maintainability
             interactionPrompt = new GameObject("InteractionPrompt");
-            interactionPrompt.transform.SetParent(canvas.transform, false);
+            interactionPrompt.transform.SetParent(cachedCanvas.transform, false);
             
             RectTransform promptRect = interactionPrompt.AddComponent<RectTransform>();
             promptRect.anchorMin = new Vector2(0.5f, 0.3f);
