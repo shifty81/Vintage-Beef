@@ -207,6 +207,17 @@ See **[CURRENT_STATE.md](CURRENT_STATE.md)** for detailed breakdown.
 - Lower quality settings (Edit → Project Settings → Quality)
 - Reduce world size in terrain settings
 
+### Visual Studio can't open project files
+- **Problem:** "Assembly-CSharp.csproj" or ".sln file not found" or "This version of Visual Studio is unable to open the following projects"
+- **Cause:** Unity project files are auto-generated and not in the repository
+- **Solution:** 
+  1. Close Visual Studio
+  2. Open the project in Unity first (Unity generates the files)
+  3. Wait for Unity to finish importing
+  4. Now open in Visual Studio (double-click any .cs file or open the .sln file)
+- **Also ensure:** Visual Studio has "Game development with Unity" workload installed
+- **See:** [SETUP.md](SETUP.md) for complete Visual Studio setup guide
+
 ---
 
 ## 📚 Documentation Index
@@ -231,6 +242,7 @@ See **[CURRENT_STATE.md](CURRENT_STATE.md)** for detailed breakdown.
 
 ### Setup Guides
 - **[UNITY_SETUP.md](UNITY_SETUP.md)** - Detailed Unity setup
+- **[VISUAL_STUDIO_SETUP.md](VISUAL_STUDIO_SETUP.md)** - Visual Studio integration guide
 - **[PREFAB_GUIDE.md](PREFAB_GUIDE.md)** - Creating prefabs
 - **[VISUAL_SETUP.md](VISUAL_SETUP.md)** - Visual/lighting setup
 - **[SETUP.md](SETUP.md)** - General setup info
