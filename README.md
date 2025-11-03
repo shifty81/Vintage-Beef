@@ -9,11 +9,14 @@ A Unity multiplayer game inspired by Vintage Story mechanics with added dungeons
 **Want to play immediately?** Choose your path:
 
 - **⚡ Fastest (2 min)**: Open `Assets/Scenes/GameWorld.unity` → Press Play → Walk around!
+- **🎮 Playable Setup (5 min)**: See **[PLAYABLE_SETUP.md](PLAYABLE_SETUP.md)** for resource gathering setup (NEW!)
 - **📋 Guided Setup (5 min)**: See **[SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)** for step-by-step checklist
 - **📖 Detailed Guide (15 min)**: See **[PLAY_NOW.md](PLAY_NOW.md)** for complete setup instructions
 - **🔧 Unity Helper Tool**: In Unity menu → `Vintage Beef → Scene Setup Helper` (auto-setup scenes!)
 
 **All scripts are ready!** Just need to set up Unity scenes to connect everything. The helper tool does most work automatically.
+
+**NEW in v0.3.2:** Resource gathering now has visual prompts! See resources, walk up, see "Press E to gather", press E, and collect! Full guide in **[PLAYABLE_SETUP.md](PLAYABLE_SETUP.md)**.
 
 ## Overview
 
@@ -23,7 +26,7 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 - **12 Professions**: Each profession specializes in different aspects of gameplay
 - **Palia-style graphics**: Stylized visuals optimized for lower-end hardware
 
-## Current Features (v0.3.1 - Major Update!)
+## Current Features (v0.3.2 - Resource Interaction Update!)
 
 ### Implemented
 - ✅ Main Menu system
@@ -46,6 +49,11 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
   - ✅ 13 voxel types (dirt, stone, ores, etc.)
 - ✅ **Resource nodes (Trees, Rocks, Plants)**
 - ✅ **Gathering mechanics with respawn**
+- ✅ **CENTRALIZED INTERACTION SYSTEM** (NEW! 🎉)
+  - ✅ Visual UI prompts ("Press E to gather")
+  - ✅ Efficient resource detection
+  - ✅ Contextual interaction feedback
+  - ✅ Seamless inventory integration
 - ✅ **Inventory system with stacking**
 - ✅ **Inventory UI**
 - ✅ **Day/night cycle with dynamic lighting**
@@ -107,11 +115,19 @@ Vintage Beef is a 12-player cooperative multiplayer game that combines:
 
 ### 📖 Documentation
 
+**Getting Started:**
+- **[PLAYABLE_SETUP.md](PLAYABLE_SETUP.md)** - Resource gathering setup (5 min) - NEW! 🎮
 - **[PLAY_NOW.md](PLAY_NOW.md)** - Complete setup guide (detailed)
 - **[SETUP_CHECKLIST.md](SETUP_CHECKLIST.md)** - Quick setup checklist
 - **[QUICKSTART.md](QUICKSTART.md)** - Quick reference guide
+
+**Feature Guides:**
+- **[INTERACTION_SYSTEM.md](INTERACTION_SYSTEM.md)** - Resource gathering system - NEW! 🎉
 - **[VOXEL_QUICKSTART.md](VOXEL_QUICKSTART.md)** - Voxel terrain guide
 - **[UNITY_SETUP.md](UNITY_SETUP.md)** - Multiplayer networking setup
+
+**Technical:**
+- **[RESOLUTION_SUMMARY.md](RESOLUTION_SUMMARY.md)** - Systems and issues resolved - NEW!
 
 ### Testing
 
@@ -150,11 +166,12 @@ See **[VOXEL_QUICKSTART.md](VOXEL_QUICKSTART.md)** for detailed voxel terrain gu
 - **Toggle Cursor**: ESC
 
 **Gameplay:**
-- **Interact/Gather**: E (when near resource or dungeon)
+- **Gather Resources**: E (when "Press E to gather" prompt appears) - NEW! 🎉
+- **Interact**: E (near dungeon entrance)
 - **Open Inventory**: I
 - **Open Chat**: Enter
 
-**Voxel Terraforming (NEW!):**
+**Voxel Terraforming:**
 - **Remove Voxel (Dig)**: Left Mouse Click
 - **Place Voxel (Build)**: Right Mouse Click
 - **Change Block Type**: Number keys 1-4

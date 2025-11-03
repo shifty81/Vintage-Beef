@@ -6,6 +6,7 @@ namespace VintageBeef.World
     /// <summary>
     /// Resource node that can be gathered by players
     /// Provides materials based on resource type and biome
+    /// Works with both PlayerInteraction (new) and legacy input checking (backward compatible)
     /// </summary>
     public class ResourceNode : MonoBehaviour
     {
@@ -17,16 +18,22 @@ namespace VintageBeef.World
         [SerializeField] private int hitPoints = 3;
         [SerializeField] private float gatherRadius = 3f;
         [SerializeField] private float respawnTime = 60f;
+        
+        [Header("Interaction Mode")]
+        [Tooltip("Use legacy input checking (calls CheckForGathering in Update). Disable if using PlayerInteraction component.")]
+        [SerializeField] private bool useLegacyInputCheck = false;
 
         private int currentHitPoints;
         private bool isDepleted = false;
         private float respawnTimer = 0f;
         private Renderer[] renderers;
+        private Vector3 originalScale;
 
         private void Awake()
         {
             currentHitPoints = hitPoints;
             renderers = GetComponentsInChildren<Renderer>();
+            originalScale = transform.localScale; // Store original scale for proper shrinking
         }
 
         private void Update()
@@ -41,10 +48,39 @@ namespace VintageBeef.World
                 return;
             }
 
-            // Check for nearby players with 'E' key
-            CheckForGathering();
+            // Only check for gathering if using legacy mode
+            if (useLegacyInputCheck)
+            {
+                CheckForGathering();
+            }
         }
 
+        /// <summary>
+        /// Check if this resource is currently depleted
+        /// </summary>
+        public bool IsDepleted()
+        {
+            return isDepleted;
+        }
+
+        /// <summary>
+        /// Try to gather from this resource node (new preferred method)
+        /// </summary>
+        /// <returns>True if gathering was successful</returns>
+        public bool TryGather(GameObject player)
+        {
+            if (isDepleted)
+            {
+                return false;
+            }
+
+            Gather(player);
+            return true;
+        }
+
+        /// <summary>
+        /// Legacy method for backward compatibility
+        /// </summary>
         private void CheckForGathering()
         {
             // Find all player objects
@@ -69,18 +105,32 @@ namespace VintageBeef.World
         {
             currentHitPoints--;
             
-            Debug.Log($"Gathered {resourceType} from {biome} biome. HP: {currentHitPoints}/{hitPoints}");
+            Debug.Log($"[ResourceNode] Gathered {resourceType} from {biome} biome. HP: {currentHitPoints}/{hitPoints}");
 
             // Award resources to player
             PlayerInventory inventory = player.GetComponent<PlayerInventory>();
             if (inventory != null)
             {
-                inventory.AddResource(GetResourceItem());
+                ResourceItem item = GetResourceItem();
+                bool added = inventory.AddResource(item);
+                
+                if (added)
+                {
+                    Debug.Log($"[ResourceNode] Added {item.amount}x {item.name} to inventory");
+                }
+                else
+                {
+                    Debug.LogWarning($"[ResourceNode] Failed to add {item.name} - inventory might be full");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[ResourceNode] Player has no inventory component");
             }
 
-            // Visual feedback - make smaller
-            float scale = currentHitPoints / (float)hitPoints;
-            transform.localScale = transform.localScale * 0.9f;
+            // Visual feedback - scale based on remaining hit points (not compound)
+            float scaleRatio = (float)currentHitPoints / hitPoints;
+            transform.localScale = originalScale * scaleRatio;
 
             if (currentHitPoints <= 0)
             {
@@ -142,8 +192,8 @@ namespace VintageBeef.World
             isDepleted = false;
             currentHitPoints = hitPoints;
             
-            // Reset scale
-            transform.localScale = Vector3.one;
+            // Reset scale to original
+            transform.localScale = originalScale;
             
             // Show the resource
             foreach (Renderer r in renderers)

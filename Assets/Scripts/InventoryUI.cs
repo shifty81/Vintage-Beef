@@ -22,12 +22,14 @@ namespace VintageBeef.UI
         [SerializeField] private KeyCode toggleKey = KeyCode.I;
 
         private PlayerInventory playerInventory;
+        private PlayerController cachedPlayerController;
+        private PlayerInteraction cachedPlayerInteraction;
         private List<InventorySlotUI> slotUIs = new List<InventorySlotUI>();
         private bool isOpen = false;
 
         private void Start()
         {
-            // Find player inventory
+            // Find player inventory and cache references
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -36,6 +38,10 @@ namespace VintageBeef.UI
                 {
                     playerInventory = player.AddComponent<PlayerInventory>();
                 }
+                
+                // Cache component references for performance
+                cachedPlayerController = player.GetComponent<PlayerController>();
+                cachedPlayerInteraction = player.GetComponent<PlayerInteraction>();
             }
 
             if (inventoryPanel != null)
@@ -71,19 +77,29 @@ namespace VintageBeef.UI
                 RefreshInventory();
                 
                 // Disable player controls while inventory is open
-                PlayerController localPlayer = FindLocalPlayerController();
-                if (localPlayer != null)
+                if (cachedPlayerController != null)
                 {
-                    localPlayer.EnableControls(false);
+                    cachedPlayerController.EnableControls(false);
+                }
+                
+                // Disable interactions while inventory is open
+                if (cachedPlayerInteraction != null)
+                {
+                    cachedPlayerInteraction.SetCanInteract(false);
                 }
             }
             else
             {
                 // Re-enable player controls
-                PlayerController localPlayer = FindLocalPlayerController();
-                if (localPlayer != null)
+                if (cachedPlayerController != null)
                 {
-                    localPlayer.EnableControls(true);
+                    cachedPlayerController.EnableControls(true);
+                }
+                
+                // Re-enable interactions
+                if (cachedPlayerInteraction != null)
+                {
+                    cachedPlayerInteraction.SetCanInteract(true);
                 }
             }
         }
@@ -178,16 +194,6 @@ namespace VintageBeef.UI
             qtyRect.anchoredPosition = Vector2.zero;
 
             return slotObj;
-        }
-
-        private PlayerController FindLocalPlayerController()
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                return player.GetComponent<PlayerController>();
-            }
-            return null;
         }
     }
 
