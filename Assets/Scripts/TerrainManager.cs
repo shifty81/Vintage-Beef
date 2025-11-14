@@ -163,7 +163,7 @@ namespace VintageBeef
             // Start from a high point and scan down
             for (float y = 100f; y >= 0f; y -= 1f)
             {
-                Voxel voxel = voxelGenerator.GetVoxel(new Vector3(worldX, y, worldZ));
+                VintageBeef.Voxel.Voxel voxel = voxelGenerator.GetVoxel(new Vector3(worldX, y, worldZ));
                 if (voxel.IsSolid())
                 {
                     return y + 1f; // Return position above solid voxel
