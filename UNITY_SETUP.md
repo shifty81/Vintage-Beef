@@ -10,6 +10,25 @@ This guide walks you through setting up the Unity scenes and prefabs for multipl
 
 ## Step 1: Create Network Player Prefab
 
+### Option A: Automated (RECOMMENDED - 30 seconds)
+
+1. **Use the Prefab Creation Helper:**
+   - Unity menu bar → `Vintage Beef` → `Prefab Creation Helper`
+   - Click "Create NetworkPlayer Prefab" button
+   - Wait for confirmation dialog
+
+2. **Configure the Created Prefab:**
+   - Select `Assets/Prefabs/NetworkPlayer.prefab` in Project window
+   - In Inspector, find **NetworkObject** component
+   - **IMPORTANT:** Check the box for **"Is Player Object"**
+   - Save (Ctrl+S or Cmd+S)
+
+3. **Done!** Skip to Step 2
+
+**Note:** See [NETWORK_PLAYER_SETUP.md](NETWORK_PLAYER_SETUP.md) for detailed documentation on the automated tool.
+
+### Option B: Manual (15 minutes)
+
 1. **Create a new GameObject in the Hierarchy:**
    - Right-click in Hierarchy → Create Empty
    - Name it "NetworkPlayer"

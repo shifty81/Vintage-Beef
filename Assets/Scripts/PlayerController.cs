@@ -122,5 +122,14 @@ namespace VintageBeef
             Cursor.lockState = enable ? CursorLockMode.Locked : CursorLockMode.None;
             Cursor.visible = !enable;
         }
+
+        /// <summary>
+        /// Set the camera transform for this player controller
+        /// Used by editor tools and setup scripts
+        /// </summary>
+        public void SetCameraTransform(Transform camera)
+        {
+            cameraTransform = camera;
+        }
     }
 }

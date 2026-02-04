@@ -34,16 +34,16 @@ This roadmap outlines the planned development phases for Vintage Beef.
 - [x] Player synchronization across network
 - [x] Username system
 - [x] Connection UI
-- [ ] Network player prefab configuration
+- [x] Network player prefab configuration (automated tool created)
 - [ ] Unity scene setup for multiplayer
-- [ ] Basic chat system
+- [ ] Basic chat system (code complete, needs scene setup)
 - [ ] Test with 12 players
 
 **Technical Tasks:**
 - [x] Integrate NetworkBehaviour components
 - [x] Add NetworkManager setup UI
 - [x] Implement player spawning over network
-- [ ] Configure player prefab with NetworkObject
+- [x] Configure player prefab with NetworkObject (automated tool ready)
 - [ ] Add disconnection handling
 - [ ] Test latency and performance
 
