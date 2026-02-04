@@ -107,14 +107,8 @@ namespace VintageBeef.Editor
             // Add AudioListener
             cameraObj.AddComponent<AudioListener>();
 
-            // Link camera to PlayerController using reflection
-            System.Type controllerType = typeof(PlayerController);
-            var cameraField = controllerType.GetField("cameraTransform", 
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            if (cameraField != null)
-            {
-                cameraField.SetValue(playerController, cameraObj.transform);
-            }
+            // Link camera to PlayerController using public setter
+            playerController.SetCameraTransform(cameraObj.transform);
 
             // Create visual representation (temporary capsule)
             GameObject visualObj = GameObject.CreatePrimitive(PrimitiveType.Capsule);
@@ -127,13 +121,26 @@ namespace VintageBeef.Editor
             // Remove the collider from visual (CharacterController handles collision)
             DestroyImmediate(visualObj.GetComponent<Collider>());
 
-            // Apply a default material
+            // Create and save material as an asset
+            string materialPath = prefabPath + "/PlayerVisualMaterial.mat";
+            Material playerMaterial = null;
+            
+            // Check if material already exists
+            playerMaterial = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
+            if (playerMaterial == null)
+            {
+                playerMaterial = new Material(Shader.Find("Standard"));
+                playerMaterial.color = new Color(0.3f, 0.5f, 0.8f); // Blue-ish color
+                AssetDatabase.CreateAsset(playerMaterial, materialPath);
+                AssetDatabase.SaveAssets();
+                Debug.Log($"Created player visual material at {materialPath}");
+            }
+
+            // Apply material to visual
             MeshRenderer renderer = visualObj.GetComponent<MeshRenderer>();
             if (renderer != null)
             {
-                Material defaultMat = new Material(Shader.Find("Standard"));
-                defaultMat.color = new Color(0.3f, 0.5f, 0.8f); // Blue-ish color
-                renderer.material = defaultMat;
+                renderer.material = playerMaterial;
             }
 
             // Save as prefab
