@@ -26,7 +26,24 @@ Prefabs are reusable GameObject templates. While the game is playable without th
 
 **Required for:** Multiplayer gameplay
 
-### Steps:
+### Quick Setup (Recommended)
+
+**Use the automated Prefab Creation Helper tool:**
+
+1. Unity menu bar → `Vintage Beef` → `Prefab Creation Helper`
+2. Click "Create NetworkPlayer Prefab" button
+3. Select the created prefab in Project window
+4. In Inspector, find NetworkObject component
+5. Check "Is Player Object" checkbox
+6. Save (Ctrl+S)
+
+**Done!** The tool automatically creates the prefab with all required components.
+
+See [NETWORK_PLAYER_SETUP.md](NETWORK_PLAYER_SETUP.md) for detailed documentation.
+
+### Manual Setup (Alternative)
+
+If you prefer to create manually:
 
 1. **Create Player GameObject**
    - Hierarchy → Create Empty
